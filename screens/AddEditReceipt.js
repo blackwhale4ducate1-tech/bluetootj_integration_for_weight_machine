@@ -1,0 +1,549 @@
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Modal,
+  TouchableOpacity,
+} from 'react-native';
+import React, {useState, useCallback, useEffect} from 'react';
+import {
+  Appbar,
+  Card,
+  Button,
+  TextInput,
+  ActivityIndicator,
+  Checkbox,
+  IconButton,
+} from 'react-native-paper';
+import CustomStyles from '../components/AddEditModalStyles';
+import {
+  useNavigation,
+  useRoute,
+  useFocusEffect,
+} from '@react-navigation/native';
+import {COLORS} from '../constants';
+import axios from 'axios';
+import {API_BASE_URL} from '../config';
+import {useAuth} from '../components/AuthContext';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import {PaperSelect} from 'react-native-paper-select';
+import {useReceipts} from '../components/ReceiptsContext';
+import SearchLedgerMenu from '../components/SearchLedgerMenu';
+
+const AddEditReceipt = () => {
+  const {data} = useAuth();
+  const route = useRoute();
+  const {type} = route.params;
+  const {
+    initialFormData,
+    formData,
+    setFormData,
+    loading,
+    setLoading,
+    initialReceiptSplits,
+    setInitialReceiptSplits,
+  } = useReceipts();
+  const navigation = useNavigation();
+
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [morOptions, setMorOptions] = useState([]);
+  const [userOptions, setUserOptions] = useState([]);
+  const [receiptSplits, setReceiptSplits] = useState(initialReceiptSplits);
+
+  const handlePayingNowChange = (index, value) => {
+    const updatedSplits = [...receiptSplits];
+    updatedSplits[index].payingNow = value;
+    setReceiptSplits(updatedSplits);
+  };
+
+  const getMorOptions = async company_name => {
+    try {
+      const response = await axios.get(
+        `${API_BASE_URL}/api/getMopOptions?company_name=${company_name}`,
+      );
+      const options = response.data.map(mor => ({
+        value: mor.ledger_group,
+        label: mor.ledger_group,
+      }));
+      setMorOptions(options);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchUsers = async company_name => {
+    try {
+      const response = await axios.get(
+        `${API_BASE_URL}/api/getUsers?company_name=${company_name}`,
+      );
+      const users = response.data.map(user => ({
+        value: user.id,
+        label: user.username,
+      }));
+      setUserOptions(users);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getInvoiceNo = async company_name => {
+    try {
+      const response = await axios.get(
+        `${API_BASE_URL}/api/getInvoiceSeriesByType?series_name=receipt&company_name=${company_name}`,
+      );
+      setFormData(prevFormData => ({
+        ...prevFormData,
+        invoiceNo: response.data.next_number,
+      }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getMorOptions(data.company_name);
+    fetchUsers(data.company_name);
+    if (type === 'Add Receipt') {
+      getInvoiceNo(data.company_name);
+    }
+  }, [data.company_name]);
+
+  useFocusEffect(
+    useCallback(() => {
+      getMorOptions(data.company_name);
+      fetchUsers(data.company_name);
+      if (type === 'Add Receipt') {
+        getInvoiceNo(data.company_name);
+      }
+    }, [data.company_name]),
+  );
+
+  const handleUpdateNameBalance = async (name, balance) => {
+    setFormData({
+      ...formData,
+      ledger: name,
+      outstandingBalance: Number(balance),
+    });
+    if (data.isBillByBillAdjustmentExist === 1) {
+      try {
+        const res = await axios.get(
+          `${API_BASE_URL}/api/getReceiptSplitsData`,
+          {
+            params: {
+              ledger: name,
+              company_name: data.company_name,
+            },
+          },
+        );
+        if (res.data.message) {
+          setReceiptSplits(res.data.message);
+        } else {
+          setReceiptSplits([]);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      if (
+        !formData.invoiceDate ||
+        !formData.mor ||
+        !formData.ledger ||
+        formData.outstandingBalance === '' ||
+        !formData.amount
+      ) {
+        return setFormData({
+          ...formData,
+          validationError: 'Please fill all details',
+        });
+      }
+      // Check the sum of receiptSplits.payingNow only if receiptSplits.length > 0
+      if (receiptSplits.length > 0 && data.isBillByBillAdjustmentExist === 1) {
+        const totalPayingNow = receiptSplits.reduce((sum, split) => {
+          return sum + (Number(split.payingNow) || 0);
+        }, 0);
+
+        // Check if the sum of receiptSplits.payingNow matches formData.amount
+        if (
+          totalPayingNow !== Number(formData.amount) &&
+          data.isBillByBillAdjustmentExist === 1
+        ) {
+          return setFormData({
+            ...formData,
+            validationError:
+              'The total amount does not match the sum of paying now amounts.',
+          });
+        }
+      }
+      if (type === 'Add Receipt') {
+        const res = await axios.post(`${API_BASE_URL}/api/addReceipt`, {
+          receipt_data: formData,
+          company_name: data.company_name,
+          receiptSplits: receiptSplits,
+          isBillByBillAdjustmentExist: data.isBillByBillAdjustmentExist,
+        });
+        if (res.data.message) {
+          setFormData(initialFormData);
+          setReceiptSplits(initialReceiptSplits);
+          navigation.goBack();
+        } else if (res.data.error) {
+          setFormData({...formData, validationError: res.data.error});
+        } else {
+          setFormData({...formData, validationError: 'Please Try again'});
+        }
+      } else if (type === 'Edit Receipt') {
+        const res = await axios.post(`${API_BASE_URL}/api/updateReceipt`, {
+          id: formData.id,
+          invoiceNo: formData.invoiceNo,
+          invoiceDate: formData.invoiceDate,
+          mor: formData.mor,
+          ledger: formData.ledger,
+          outstandingBalance: formData.outstandingBalance,
+          narration: formData.narration,
+          amount: formData.amount,
+          user_id: formData.user.id,
+          company_name: data.company_name,
+          receiptSplits: receiptSplits,
+          isBillByBillAdjustmentExist: data.isBillByBillAdjustmentExist,
+        });
+        if (res.data.message) {
+          navigation.goBack();
+        } else if (res.data.error) {
+          setFormData({...formData, validationError: res.data.error});
+        } else {
+          setFormData({...formData, validationError: 'Please Try again'});
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <View style={CustomStyles.safeContainer}>
+      <Appbar.Header style={CustomStyles.appHeader}>
+        <Appbar.BackAction
+          onPress={() => {
+            navigation.goBack();
+          }}
+          color={COLORS.white}
+        />
+        <Appbar.Content
+          title={`${type}`}
+          titleStyle={CustomStyles.titleStyle}
+        />
+      </Appbar.Header>
+      {loading && (
+        <Modal
+          transparent={true}
+          animationType="none"
+          visible={loading}
+          onRequestClose={() => {}} // Prevent the modal from closing
+        >
+          <View style={CustomStyles.overlay}>
+            <ActivityIndicator
+              size="large"
+              animating={true}
+              color={COLORS.emerald}
+            />
+          </View>
+        </Modal>
+      )}
+      <ScrollView contentContainerStyle={CustomStyles.scrollViewContent}>
+        <TextInput
+          mode="outlined"
+          label="Invoice No"
+          value={formData.invoiceNo.toString()}
+          onChangeText={text =>
+            setFormData({
+              ...formData,
+              invoiceNo: text,
+            })
+          }
+          readOnly
+          style={{margin: 10}}
+          outlineColor={COLORS.black}
+          textColor={COLORS.black}
+          activeOutlineColor={COLORS.primary}
+        />
+        <View style={CustomStyles.row}>
+          <TextInput
+            style={{margin: 10, flex: 9}}
+            mode="outlined"
+            label="Invoice Date"
+            placeholderTextColor={COLORS.black}
+            activeUnderlineColor={COLORS.primary}
+            value={
+              formData.invoiceDate
+                ? new Date(formData.invoiceDate).toLocaleDateString('ta-IN')
+                : ''
+            }
+            placeholder="Invoice Date"
+            editable={false}
+          />
+          <IconButton
+            icon="calendar"
+            size={40}
+            onPress={() => setShowDatePicker(true)}
+            style={{margin: 10, flex: 1}}
+          />
+          {showDatePicker && (
+            <DateTimePicker
+              value={
+                formData.invoiceDate
+                  ? new Date(formData.invoiceDate)
+                  : new Date()
+              }
+              mode="date"
+              display="default"
+              onChange={(event, selectedDate) => {
+                setShowDatePicker(false);
+                if (selectedDate) {
+                  setFormData({
+                    ...formData,
+                    invoiceDate: selectedDate.toISOString(),
+                  });
+                }
+              }}
+            />
+          )}
+        </View>
+        <View style={{margin: 10}}>
+          <PaperSelect
+            label="Mode of Receiving"
+            textInputMode="outlined"
+            containerStyle={{flex: 1}}
+            value={formData.mor?.label || ''}
+            onSelection={item => {
+              if (item.selectedList.length === 0) {
+                return;
+              }
+              setFormData(prevFormData => ({
+                ...prevFormData,
+                mor: {
+                  value: item.selectedList[0]._id,
+                  label: item.selectedList[0].value,
+                },
+              }));
+            }}
+            arrayList={morOptions.map(option => ({
+              value: option.label,
+              _id: option.value,
+            }))}
+            selectedArrayList={
+              formData.mor
+                ? [
+                    {
+                      value: formData.mor.label,
+                      _id: formData.mor.value,
+                    },
+                  ]
+                : []
+            }
+            errorText=""
+            multiEnable={false}
+          />
+        </View>
+        <SearchLedgerMenu
+          handleUpdateNameBalance={handleUpdateNameBalance}
+          ledgerInput={formData.ledger}
+        />
+        <TextInput
+          mode="outlined"
+          label="Outstanding Balance"
+          value={formData.outstandingBalance.toString()}
+          onChangeText={text =>
+            setFormData({
+              ...formData,
+              outstandingBalance: text,
+            })
+          }
+          style={{margin: 10}}
+          outlineColor={COLORS.black}
+          textColor={COLORS.black}
+          activeOutlineColor={COLORS.primary}
+        />
+        <TextInput
+          mode="outlined"
+          label="Amount"
+          value={formData.amount.toString()}
+          onChangeText={text =>
+            setFormData({
+              ...formData,
+              amount: text,
+            })
+          }
+          style={{margin: 10}}
+          outlineColor={COLORS.black}
+          textColor={COLORS.black}
+          activeOutlineColor={COLORS.primary}
+        />
+        <TextInput
+          mode="outlined"
+          label="Narration"
+          value={formData.narration}
+          onChangeText={text =>
+            setFormData({
+              ...formData,
+              narration: text,
+            })
+          }
+          multiline={true}
+          numberOfLines={4}
+          style={{margin: 10}}
+          outlineColor={COLORS.black}
+          textColor={COLORS.black}
+          activeOutlineColor={COLORS.primary}
+        />
+        <View style={{margin: 10}}>
+          <PaperSelect
+            label="Created By User"
+            textInputMode="outlined"
+            containerStyle={{flex: 1}}
+            value={formData.user?.username || ''}
+            onSelection={item => {
+              if (item.selectedList.length === 0) {
+                return;
+              }
+              setFormData(prevFormData => ({
+                ...prevFormData,
+                user: {
+                  id: item.selectedList[0]._id,
+                  username: item.selectedList[0].value,
+                },
+              }));
+            }}
+            arrayList={userOptions.map(option => ({
+              value: option.label,
+              _id: option.value,
+            }))}
+            selectedArrayList={
+              formData.user
+                ? [
+                    {
+                      value: formData.user.username,
+                      _id: formData.user.id,
+                    },
+                  ]
+                : []
+            }
+            errorText=""
+            multiEnable={false}
+            disabled={data.role !== 'admin'}
+          />
+        </View>
+        {Array.isArray(receiptSplits) &&
+          receiptSplits.length > 0 &&
+          data.isBillByBillAdjustmentExist === 1 && (
+            <Card style={{margin: 10}}>
+              <Card.Title title="Receipt Splits" />
+              <Card.Content>
+                {receiptSplits.map((split, index) => (
+                  <View key={index} style={styles.splitContainer}>
+                    <View style={styles.splitRow}>
+                      <Text style={styles.splitLabel}>Invoice No:</Text>
+                      <Text style={styles.splitValue}>
+                        {split.invoice_no ?? 'N/A'}
+                      </Text>
+                    </View>
+                    <View style={styles.splitRow}>
+                      <Text style={styles.splitLabel}>Type:</Text>
+                      <Text style={styles.splitValue}>
+                        {split.invoice_type ?? 'N/A'}
+                      </Text>
+                    </View>
+                    <View style={styles.splitRow}>
+                      <Text style={styles.splitLabel}>Bill Amount:</Text>
+                      <Text style={styles.splitValue}>
+                        {split.total_amount ?? 0}
+                      </Text>
+                    </View>
+                    <View style={styles.splitRow}>
+                      <Text style={styles.splitLabel}>Settled:</Text>
+                      <Text style={styles.splitValue}>
+                        {split.settled_amount ?? 0}
+                      </Text>
+                    </View>
+                    <View style={styles.splitRow}>
+                      <Text style={styles.splitLabel}>Pending:</Text>
+                      <Text style={styles.splitValue}>
+                        {split.pending_amount ?? 0}
+                      </Text>
+                    </View>
+                    <View style={styles.splitRow}>
+                      <Text style={styles.splitLabel}>Paying Now:</Text>
+                      <TextInput
+                        style={styles.payingNowInput}
+                        keyboardType="numeric"
+                        value={split.payingNow?.toString()}
+                        onChangeText={text =>
+                          handlePayingNowChange(index, text)
+                        }
+                      />
+                    </View>
+                    <View style={styles.divider} />
+                  </View>
+                ))}
+              </Card.Content>
+            </Card>
+          )}
+        <Text style={{color: COLORS.red, padding: 10}}>
+          {formData.validationError}
+        </Text>
+      </ScrollView>
+      <View style={CustomStyles.boottomButtonsContainer}>
+        <Button
+          mode="contained"
+          onPress={() => {
+            handleSubmit();
+          }}
+          style={[CustomStyles.bottomButton, {flex: 1}]}>
+          <Text>Save</Text>
+        </Button>
+      </View>
+    </View>
+  );
+};
+
+export default AddEditReceipt;
+
+const styles = StyleSheet.create({
+  splitContainer: {
+    marginBottom: 10,
+  },
+  splitRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginVertical: 4,
+  },
+  splitLabel: {
+    fontWeight: 'bold',
+    color: COLORS.black,
+  },
+  splitValue: {
+    flex: 1,
+    marginLeft: 10,
+    textAlign: 'right',
+  },
+  payingNowInput: {
+    height: 40,
+    width: 100,
+    borderWidth: 1,
+    borderColor: COLORS.gray,
+    borderRadius: 4,
+    paddingHorizontal: 8,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: COLORS.lightGray,
+    marginVertical: 8,
+  },
+});

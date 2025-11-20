@@ -1,0 +1,260 @@
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import React, {useState, useCallback, useEffect} from 'react';
+import axios from 'axios';
+import {API_BASE_URL} from '../config';
+import {useAuth} from './AuthContext';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
+import {Button, List, Card, IconButton, Icon} from 'react-native-paper';
+import {COLORS, FONTS} from '../constants';
+import {useSales} from './SalesContext';
+import {useEstimate} from './EstimateContext';
+import {usePettySales} from './PettySalesContext';
+
+const SalesInvoiceItemsEditMenu = ({type, invoice_no, setItemsLoading}) => {
+  const {data} = useAuth();
+  if (type === 'sales' || type === 'sales_order') {
+    ({
+      items,
+      setItems,
+      setNewProduct,
+      initialItem,
+      setItemStatus,
+      setRowNoToUpdate,
+      setSearchProductInput,
+    } = useSales());
+  } else if (type === 'estimate') {
+    ({
+      items,
+      setItems,
+      setNewProduct,
+      initialItem,
+      setItemStatus,
+      setRowNoToUpdate,
+      setSearchProductInput,
+    } = useEstimate());
+  } else if (type === 'pettySales') {
+    ({
+      items,
+      setItems,
+      setNewProduct,
+      initialItem,
+      setItemStatus,
+      setRowNoToUpdate,
+      setSearchProductInput,
+    } = usePettySales());
+  }
+  const navigation = useNavigation();
+
+  const [billedItemsExpanded, setBilledItemsExpanded] = useState(true);
+
+  useEffect(() => {
+    const getInvoiceItemsData = async company_name => {
+      setItemsLoading(true);
+      try {
+        const response = await axios.get(
+          `${API_BASE_URL}/api/getInvoiceItemsData?type=${type}&invoiceNo=${invoice_no}&company_name=${company_name}`,
+        );
+        let sNo = 0;
+        const mappedItems = response.data.map(apiItem => ({
+          sNo: sNo++,
+          barcode: apiItem.barcode,
+          productCode: apiItem.product_code,
+          productName: apiItem.product_name,
+          hsnCode: apiItem.hsn_code,
+          unit: apiItem.unit,
+          alt_unit: apiItem.alt_unit,
+          uc_factor: apiItem.uc_factor,
+          selectedUnit: apiItem.selected_unit,
+          description: apiItem.description,
+          qty: apiItem.qty,
+          purchasePrice: apiItem.purchase_price,
+          salesPrice: apiItem.sales_price,
+          mrp: apiItem.mrp,
+          newPurchasePrice: apiItem.new_purchase_price,
+          newSalesPrice: apiItem.new_sales_price,
+          newMrp: apiItem.new_mrp,
+          cost: apiItem.cost,
+          purchaseInclusive: apiItem.purchase_inclusive,
+          salesInclusive: apiItem.sales_inclusive,
+          grossAmt: apiItem.gross_amt,
+          taxable: apiItem.taxable,
+          selectedTax: apiItem.selected_tax,
+          cgstP: apiItem.cgstP,
+          cgst: apiItem.cgst,
+          sgstP: apiItem.sgstP,
+          sgst: apiItem.sgst,
+          igstP: apiItem.igstP,
+          igst: apiItem.igst,
+          discountP: apiItem.discountP,
+          discount: apiItem.discount,
+          subTotal: apiItem.sub_total,
+          unitOptions:
+            apiItem.unit && apiItem.alt_unit
+              ? [{option: apiItem.unit}, {option: apiItem.alt_unit}]
+              : apiItem.unit && !apiItem.alt_unit
+              ? [{option: apiItem.unit}]
+              : [],
+          dynamicColumns: apiItem.dynamicColumns,
+          remarks: apiItem.remarks,
+        }));
+        setItems(mappedItems);
+        // console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setItemsLoading(false);
+      }
+    };
+
+    getInvoiceItemsData(data.company_name);
+  }, []);
+
+  const handleDeleteItem = index => {
+    setItems(prevItems => {
+      const updatedItems = [...prevItems];
+      updatedItems.splice(index, 1);
+      return updatedItems;
+    });
+  };
+
+  return (
+    <View>
+      <View style={{padding: 20}}>
+        <List.Accordion
+          title="Billed Items"
+          expanded={billedItemsExpanded}
+          onPress={() => setBilledItemsExpanded(!billedItemsExpanded)}
+          style={{
+            backgroundColor: COLORS.inputbggreen,
+            borderRadius: 5,
+          }}
+          titleStyle={{
+            fontFamily: FONTS.body4.fontFamily,
+            color: COLORS.black,
+          }}>
+          {items.map((item, index) => (
+            <TouchableOpacity
+              key={index}
+              onPress={() => {
+                setNewProduct(items[index]);
+                setRowNoToUpdate(index);
+                setSearchProductInput(items[index].productCode);
+                setItemStatus('Edit');
+                navigation.navigate('AddEditSalesItem', {type: type, invoice_no: invoice_no});
+              }}>
+              <Card
+                key={index}
+                style={{marginVertical: 5, backgroundColor: COLORS.white}}>
+                <Card.Title
+                  title={`#${index + 1} ${item.productCode}`}
+                  right={props => (
+                    <IconButton
+                      {...props}
+                      icon="delete"
+                      iconColor={COLORS.red}
+                      onPress={() => handleDeleteItem(index)}
+                    />
+                  )}
+                />
+                <Card.Content>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                    }}>
+                    <View style={{flex: 1}}>
+                      <Text style={styles.billText}>Qty * Sales Price</Text>
+                    </View>
+                    <View style={{flex: 1, alignItems: 'flex-end'}}>
+                      <Text style={styles.billText}>
+                        {item.qty} * {parseFloat(item.newSalesPrice).toFixed(2)}{' '}
+                        =
+                        <Icon source="currency-inr" />
+                        {parseFloat(item.qty * item.newSalesPrice).toFixed(2)}
+                      </Text>
+                    </View>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                    }}>
+                    <View style={{flex: 1}}>
+                      <Text style={styles.billText}>Discount</Text>
+                    </View>
+                    <View style={{flex: 1, alignItems: 'flex-end'}}>
+                      <Text style={styles.billText}>
+                        -<Icon source="currency-inr" />
+                        {parseFloat(item.discount || 0).toFixed(2)}
+                      </Text>
+                    </View>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                    }}>
+                    <View style={{flex: 1}}>
+                      <Text style={styles.billText}>Tax</Text>
+                    </View>
+                    <View style={{flex: 1, alignItems: 'flex-end'}}>
+                      <Text style={styles.billText}>
+                        <Icon source="currency-inr" />
+                        {(
+                          parseFloat(item.cgst + item.sgst + item.igst || 0) *
+                          item.qty
+                        ).toFixed(2)}
+                      </Text>
+                    </View>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                    }}>
+                    <View style={{flex: 1}}>
+                      <Text style={styles.billText}>Sub Total</Text>
+                    </View>
+                    <View style={{flex: 1, alignItems: 'flex-end'}}>
+                      <Text style={styles.billText}>
+                        <Icon source="currency-inr" />
+                        {parseFloat(item.subTotal).toFixed(2)}
+                      </Text>
+                    </View>
+                  </View>
+                </Card.Content>
+              </Card>
+            </TouchableOpacity>
+          ))}
+        </List.Accordion>
+      </View>
+      <Button
+        mode="outlined"
+        icon="plus"
+        onPress={() => {
+          setNewProduct(initialItem);
+          setItemStatus('Add');
+          setSearchProductInput('');
+          navigation.navigate('AddEditSalesItem', {type: type, invoice_no: invoice_no});
+        }}
+        buttonColor={COLORS.white}
+        rippleColor={COLORS.lightRed}
+        theme={{colors: {outline: COLORS.red, primary: COLORS.red}}}
+        style={{
+          marginHorizontal: 70,
+        }}>
+        Add Items
+      </Button>
+    </View>
+  );
+};
+
+export default SalesInvoiceItemsEditMenu;
+
+const styles = StyleSheet.create({
+  billText: {
+    fontSize: 12,
+    fontFamily: FONTS.body4.fontFamily,
+    color: COLORS.black,
+  },
+});

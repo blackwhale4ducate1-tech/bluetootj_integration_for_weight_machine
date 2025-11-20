@@ -1,0 +1,334 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.fintrackvirtualtech"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+9        android:targetSdkVersion="34" />
+10    <!-- Network & camera -->
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:5:5-67
+11-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:5:22-64
+12    <uses-permission android:name="android.permission.CAMERA" />
+12-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:6:5-65
+12-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:6:22-62
+13
+14    <uses-feature
+14-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:7:5-84
+15        android:name="android.hardware.camera"
+15-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:7:19-57
+16        android:required="true" />
+16-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:7:58-81
+17    <uses-feature
+17-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:8:5-95
+18        android:name="android.hardware.camera.autofocus"
+18-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:8:19-67
+19        android:required="false" /> <!-- Bluetooth (pre-Android 12) -->
+19-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:8:68-92
+20    <uses-permission
+20-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:11:5-68
+21        android:name="android.permission.BLUETOOTH"
+21-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:11:22-65
+22        android:maxSdkVersion="30" />
+22-->[com.polidea.rxandroidble2:rxandroidble:1.17.2] /home/karthi/.gradle/caches/transforms-3/6b14caa3331fbb1832aaac0093ea3c4b/transformed/jetified-rxandroidble-1.17.2/AndroidManifest.xml:12:9-35
+23    <uses-permission
+23-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:12:5-74
+24        android:name="android.permission.BLUETOOTH_ADMIN"
+24-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:12:22-71
+25        android:maxSdkVersion="30" /> <!-- Location (required for BLE scanning on older Android versions) -->
+25-->[com.polidea.rxandroidble2:rxandroidble:1.17.2] /home/karthi/.gradle/caches/transforms-3/6b14caa3331fbb1832aaac0093ea3c4b/transformed/jetified-rxandroidble-1.17.2/AndroidManifest.xml:15:9-35
+26    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+26-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:15:5-79
+26-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:15:22-76
+27    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- Bluetooth (Android 12+, API 31+) -->
+27-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:16:5-81
+27-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:16:22-78
+28    <uses-permission
+28-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:19:5-22:32
+29        android:name="android.permission.BLUETOOTH_SCAN"
+29-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:20:9-57
+30        android:usesPermissionFlags="neverForLocation" />
+30-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:21:9-55
+31    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" /> <!-- BLE hardware requirement -->
+31-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:23:5-25:32
+31-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:24:9-60
+32    <uses-feature
+32-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:28:5-30:35
+33        android:name="android.hardware.bluetooth_le"
+33-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:29:9-53
+34        android:required="true" />
+34-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:30:9-32
+35
+36    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+36-->[:react-native-fs] /home/karthi/Documents/fintrac/blutooth_integration/node_modules/react-native-fs/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:7:5-81
+36-->[:react-native-fs] /home/karthi/Documents/fintrac/blutooth_integration/node_modules/react-native-fs/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:7:22-78
+37    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+38    <!--
+39    This manifest file is used only by Gradle to configure debug-only capabilities
+40    for React Native Apps.
+41    -->
+42    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+42-->[com.facebook.react:react-android:0.73.6] /home/karthi/.gradle/caches/transforms-3/e1231b5b187cb579b629117f9511a862/transformed/jetified-react-android-0.73.6-debug/AndroidManifest.xml:16:5-78
+42-->[com.facebook.react:react-android:0.73.6] /home/karthi/.gradle/caches/transforms-3/e1231b5b187cb579b629117f9511a862/transformed/jetified-react-android-0.73.6-debug/AndroidManifest.xml:16:22-75
+43    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+43-->[com.facebook.flipper:flipper:0.201.0] /home/karthi/.gradle/caches/transforms-3/9b2c28bd5719adb7e465469e2ca76c12/transformed/jetified-flipper-0.201.0/AndroidManifest.xml:14:5-76
+43-->[com.facebook.flipper:flipper:0.201.0] /home/karthi/.gradle/caches/transforms-3/9b2c28bd5719adb7e465469e2ca76c12/transformed/jetified-flipper-0.201.0/AndroidManifest.xml:14:22-73
+44
+45    <queries>
+45-->[androidx.camera:camera-extensions:1.4.0-beta02] /home/karthi/.gradle/caches/transforms-3/252b75f57f6c58a7b8babde71266760a/transformed/jetified-camera-extensions-1.4.0-beta02/AndroidManifest.xml:22:5-26:15
+46        <intent>
+46-->[androidx.camera:camera-extensions:1.4.0-beta02] /home/karthi/.gradle/caches/transforms-3/252b75f57f6c58a7b8babde71266760a/transformed/jetified-camera-extensions-1.4.0-beta02/AndroidManifest.xml:23:9-25:18
+47            <action android:name="androidx.camera.extensions.action.VENDOR_ACTION" />
+47-->[androidx.camera:camera-extensions:1.4.0-beta02] /home/karthi/.gradle/caches/transforms-3/252b75f57f6c58a7b8babde71266760a/transformed/jetified-camera-extensions-1.4.0-beta02/AndroidManifest.xml:24:13-86
+47-->[androidx.camera:camera-extensions:1.4.0-beta02] /home/karthi/.gradle/caches/transforms-3/252b75f57f6c58a7b8babde71266760a/transformed/jetified-camera-extensions-1.4.0-beta02/AndroidManifest.xml:24:21-83
+48        </intent>
+49    </queries> <!-- required for API 23 - 30, no android:maxSdkVersion because of a potential breaking change -->
+50    <!-- TODO: add android:maxSdkVersion on 2.0.0 -->
+51    <uses-permission-sdk-23 android:name="android.permission.ACCESS_COARSE_LOCATION" />
+51-->[com.polidea.rxandroidble2:rxandroidble:1.17.2] /home/karthi/.gradle/caches/transforms-3/6b14caa3331fbb1832aaac0093ea3c4b/transformed/jetified-rxandroidble-1.17.2/AndroidManifest.xml:18:5-88
+51-->[com.polidea.rxandroidble2:rxandroidble:1.17.2] /home/karthi/.gradle/caches/transforms-3/6b14caa3331fbb1832aaac0093ea3c4b/transformed/jetified-rxandroidble-1.17.2/AndroidManifest.xml:18:29-85
+52    <uses-permission-sdk-23 android:name="android.permission.ACCESS_FINE_LOCATION" />
+52-->[com.polidea.rxandroidble2:rxandroidble:1.17.2] /home/karthi/.gradle/caches/transforms-3/6b14caa3331fbb1832aaac0093ea3c4b/transformed/jetified-rxandroidble-1.17.2/AndroidManifest.xml:19:5-86
+52-->[com.polidea.rxandroidble2:rxandroidble:1.17.2] /home/karthi/.gradle/caches/transforms-3/6b14caa3331fbb1832aaac0093ea3c4b/transformed/jetified-rxandroidble-1.17.2/AndroidManifest.xml:19:29-83
+53
+54    <permission
+54-->[androidx.core:core:1.9.0] /home/karthi/.gradle/caches/transforms-3/13659b94c66de92d98d7f8af61234b95/transformed/core-1.9.0/AndroidManifest.xml:22:5-24:47
+55        android:name="com.fintrackvirtualtech.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+55-->[androidx.core:core:1.9.0] /home/karthi/.gradle/caches/transforms-3/13659b94c66de92d98d7f8af61234b95/transformed/core-1.9.0/AndroidManifest.xml:23:9-81
+56        android:protectionLevel="signature" />
+56-->[androidx.core:core:1.9.0] /home/karthi/.gradle/caches/transforms-3/13659b94c66de92d98d7f8af61234b95/transformed/core-1.9.0/AndroidManifest.xml:24:9-44
+57
+58    <uses-permission android:name="com.fintrackvirtualtech.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" /> <!-- Although the *SdkVersion is captured in gradle build files, this is required for non gradle builds -->
+58-->[androidx.core:core:1.9.0] /home/karthi/.gradle/caches/transforms-3/13659b94c66de92d98d7f8af61234b95/transformed/core-1.9.0/AndroidManifest.xml:26:5-97
+58-->[androidx.core:core:1.9.0] /home/karthi/.gradle/caches/transforms-3/13659b94c66de92d98d7f8af61234b95/transformed/core-1.9.0/AndroidManifest.xml:26:22-94
+59    <!-- <uses-sdk android:minSdkVersion="14"/> -->
+60    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+60-->[com.google.android.datatransport:transport-backend-cct:2.3.3] /home/karthi/.gradle/caches/transforms-3/3c8ce7608c11d2c124765c7472926828/transformed/jetified-transport-backend-cct-2.3.3/AndroidManifest.xml:25:5-79
+60-->[com.google.android.datatransport:transport-backend-cct:2.3.3] /home/karthi/.gradle/caches/transforms-3/3c8ce7608c11d2c124765c7472926828/transformed/jetified-transport-backend-cct-2.3.3/AndroidManifest.xml:25:22-76
+61
+62    <application
+62-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:32:5-51:19
+63        android:name="com.fintrackvirtualtech.MainApplication"
+63-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:33:7-38
+64        android:allowBackup="false"
+64-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:36:7-34
+65        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+65-->[androidx.core:core:1.9.0] /home/karthi/.gradle/caches/transforms-3/13659b94c66de92d98d7f8af61234b95/transformed/core-1.9.0/AndroidManifest.xml:28:18-86
+66        android:debuggable="true"
+67        android:extractNativeLibs="true"
+68        android:icon="@mipmap/ic_launcher"
+68-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:35:7-41
+69        android:label="@string/app_name"
+69-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:34:7-39
+70        android:theme="@style/AppTheme"
+70-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:37:7-38
+71        android:usesCleartextTraffic="true" >
+71-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/debug/AndroidManifest.xml:6:9-44
+72        <activity
+72-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:39:7-50:18
+73            android:name="com.fintrackvirtualtech.MainActivity"
+73-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:40:9-37
+74            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+74-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:42:9-118
+75            android:exported="true"
+75-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:45:9-32
+76            android:label="@string/app_name"
+76-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:41:9-41
+77            android:launchMode="singleTask"
+77-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:43:9-40
+78            android:windowSoftInputMode="adjustResize" >
+78-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:44:9-51
+79            <intent-filter>
+79-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:46:9-49:25
+80                <action android:name="android.intent.action.MAIN" />
+80-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:47:13-65
+80-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:47:21-62
+81
+82                <category android:name="android.intent.category.LAUNCHER" />
+82-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:48:13-73
+82-->/home/karthi/Documents/fintrac/blutooth_integration/android/app/src/main/AndroidManifest.xml:48:23-70
+83            </intent-filter>
+84        </activity>
+85
+86        <provider
+86-->[:react-native-image-picker] /home/karthi/Documents/fintrac/blutooth_integration/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:8:9-16:20
+87            android:name="com.imagepicker.ImagePickerProvider"
+87-->[:react-native-image-picker] /home/karthi/Documents/fintrac/blutooth_integration/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:9:13-63
+88            android:authorities="com.fintrackvirtualtech.imagepickerprovider"
+88-->[:react-native-image-picker] /home/karthi/Documents/fintrac/blutooth_integration/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:10:13-71
+89            android:exported="false"
+89-->[:react-native-image-picker] /home/karthi/Documents/fintrac/blutooth_integration/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-37
+90            android:grantUriPermissions="true" >
+90-->[:react-native-image-picker] /home/karthi/Documents/fintrac/blutooth_integration/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:12:13-47
+91            <meta-data
+91-->[:react-native-image-picker] /home/karthi/Documents/fintrac/blutooth_integration/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:13:13-15:70
+92                android:name="android.support.FILE_PROVIDER_PATHS"
+92-->[:react-native-image-picker] /home/karthi/Documents/fintrac/blutooth_integration/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:14:17-67
+93                android:resource="@xml/imagepicker_provider_paths" />
+93-->[:react-native-image-picker] /home/karthi/Documents/fintrac/blutooth_integration/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:15:17-67
+94        </provider>
+95        <provider
+95-->[:react-native-share] /home/karthi/Documents/fintrac/blutooth_integration/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:8:9-16:20
+96            android:name="cl.json.RNShareFileProvider"
+96-->[:react-native-share] /home/karthi/Documents/fintrac/blutooth_integration/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:9:13-55
+97            android:authorities="com.fintrackvirtualtech.rnshare.fileprovider"
+97-->[:react-native-share] /home/karthi/Documents/fintrac/blutooth_integration/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:10:13-72
+98            android:exported="false"
+98-->[:react-native-share] /home/karthi/Documents/fintrac/blutooth_integration/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-37
+99            android:grantUriPermissions="true" >
+99-->[:react-native-share] /home/karthi/Documents/fintrac/blutooth_integration/node_modules/react-native-share/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:12:13-47
+100            <meta-data
+100-->[:react-native-image-picker] /home/karthi/Documents/fintrac/blutooth_integration/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:13:13-15:70
+101                android:name="android.support.FILE_PROVIDER_PATHS"
+101-->[:react-native-image-picker] /home/karthi/Documents/fintrac/blutooth_integration/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:14:17-67
+102                android:resource="@xml/share_download_paths" />
+102-->[:react-native-image-picker] /home/karthi/Documents/fintrac/blutooth_integration/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:15:17-67
+103        </provider>
+104
+105        <activity
+105-->[com.facebook.react:react-android:0.73.6] /home/karthi/.gradle/caches/transforms-3/e1231b5b187cb579b629117f9511a862/transformed/jetified-react-android-0.73.6-debug/AndroidManifest.xml:19:9-21:40
+106            android:name="com.facebook.react.devsupport.DevSettingsActivity"
+106-->[com.facebook.react:react-android:0.73.6] /home/karthi/.gradle/caches/transforms-3/e1231b5b187cb579b629117f9511a862/transformed/jetified-react-android-0.73.6-debug/AndroidManifest.xml:20:13-77
+107            android:exported="false" />
+107-->[com.facebook.react:react-android:0.73.6] /home/karthi/.gradle/caches/transforms-3/e1231b5b187cb579b629117f9511a862/transformed/jetified-react-android-0.73.6-debug/AndroidManifest.xml:21:13-37
+108
+109        <uses-library
+109-->[androidx.camera:camera-extensions:1.4.0-beta02] /home/karthi/.gradle/caches/transforms-3/252b75f57f6c58a7b8babde71266760a/transformed/jetified-camera-extensions-1.4.0-beta02/AndroidManifest.xml:29:9-31:40
+110            android:name="androidx.camera.extensions.impl"
+110-->[androidx.camera:camera-extensions:1.4.0-beta02] /home/karthi/.gradle/caches/transforms-3/252b75f57f6c58a7b8babde71266760a/transformed/jetified-camera-extensions-1.4.0-beta02/AndroidManifest.xml:30:13-59
+111            android:required="false" />
+111-->[androidx.camera:camera-extensions:1.4.0-beta02] /home/karthi/.gradle/caches/transforms-3/252b75f57f6c58a7b8babde71266760a/transformed/jetified-camera-extensions-1.4.0-beta02/AndroidManifest.xml:31:13-37
+112
+113        <service
+113-->[androidx.camera:camera-camera2:1.4.0-beta02] /home/karthi/.gradle/caches/transforms-3/2bea2f30b3a5032c69ce4879d7b21965/transformed/jetified-camera-camera2-1.4.0-beta02/AndroidManifest.xml:24:9-33:19
+114            android:name="androidx.camera.core.impl.MetadataHolderService"
+114-->[androidx.camera:camera-camera2:1.4.0-beta02] /home/karthi/.gradle/caches/transforms-3/2bea2f30b3a5032c69ce4879d7b21965/transformed/jetified-camera-camera2-1.4.0-beta02/AndroidManifest.xml:25:13-75
+115            android:enabled="false"
+115-->[androidx.camera:camera-camera2:1.4.0-beta02] /home/karthi/.gradle/caches/transforms-3/2bea2f30b3a5032c69ce4879d7b21965/transformed/jetified-camera-camera2-1.4.0-beta02/AndroidManifest.xml:26:13-36
+116            android:exported="false" >
+116-->[androidx.camera:camera-camera2:1.4.0-beta02] /home/karthi/.gradle/caches/transforms-3/2bea2f30b3a5032c69ce4879d7b21965/transformed/jetified-camera-camera2-1.4.0-beta02/AndroidManifest.xml:27:13-37
+117            <meta-data
+117-->[androidx.camera:camera-camera2:1.4.0-beta02] /home/karthi/.gradle/caches/transforms-3/2bea2f30b3a5032c69ce4879d7b21965/transformed/jetified-camera-camera2-1.4.0-beta02/AndroidManifest.xml:30:13-32:89
+118                android:name="androidx.camera.core.impl.MetadataHolderService.DEFAULT_CONFIG_PROVIDER"
+118-->[androidx.camera:camera-camera2:1.4.0-beta02] /home/karthi/.gradle/caches/transforms-3/2bea2f30b3a5032c69ce4879d7b21965/transformed/jetified-camera-camera2-1.4.0-beta02/AndroidManifest.xml:31:17-103
+119                android:value="androidx.camera.camera2.Camera2Config$DefaultProvider" />
+119-->[androidx.camera:camera-camera2:1.4.0-beta02] /home/karthi/.gradle/caches/transforms-3/2bea2f30b3a5032c69ce4879d7b21965/transformed/jetified-camera-camera2-1.4.0-beta02/AndroidManifest.xml:32:17-86
+120        </service>
+121        <service
+121-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.0] /home/karthi/.gradle/caches/transforms-3/6c0561e1c87bef49df048e30c7a124e4/transformed/jetified-play-services-mlkit-barcode-scanning-18.3.0/AndroidManifest.xml:9:9-15:19
+122            android:name="com.google.mlkit.common.internal.MlKitComponentDiscoveryService"
+122-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.0] /home/karthi/.gradle/caches/transforms-3/6c0561e1c87bef49df048e30c7a124e4/transformed/jetified-play-services-mlkit-barcode-scanning-18.3.0/AndroidManifest.xml:10:13-91
+123            android:directBootAware="true"
+123-->[com.google.mlkit:common:18.9.0] /home/karthi/.gradle/caches/transforms-3/5f745a34c6c52aab1659caa5e3026e01/transformed/jetified-common-18.9.0/AndroidManifest.xml:17:13-43
+124            android:exported="false" >
+124-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.0] /home/karthi/.gradle/caches/transforms-3/6c0561e1c87bef49df048e30c7a124e4/transformed/jetified-play-services-mlkit-barcode-scanning-18.3.0/AndroidManifest.xml:11:13-37
+125            <meta-data
+125-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.0] /home/karthi/.gradle/caches/transforms-3/6c0561e1c87bef49df048e30c7a124e4/transformed/jetified-play-services-mlkit-barcode-scanning-18.3.0/AndroidManifest.xml:12:13-14:85
+126                android:name="com.google.firebase.components:com.google.mlkit.vision.barcode.internal.BarcodeRegistrar"
+126-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.0] /home/karthi/.gradle/caches/transforms-3/6c0561e1c87bef49df048e30c7a124e4/transformed/jetified-play-services-mlkit-barcode-scanning-18.3.0/AndroidManifest.xml:13:17-120
+127                android:value="com.google.firebase.components.ComponentRegistrar" />
+127-->[com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.0] /home/karthi/.gradle/caches/transforms-3/6c0561e1c87bef49df048e30c7a124e4/transformed/jetified-play-services-mlkit-barcode-scanning-18.3.0/AndroidManifest.xml:14:17-82
+128            <meta-data
+128-->[com.google.mlkit:vision-common:17.3.0] /home/karthi/.gradle/caches/transforms-3/b06e996754df58f6f9b943da924094f9/transformed/jetified-vision-common-17.3.0/AndroidManifest.xml:12:13-14:85
+129                android:name="com.google.firebase.components:com.google.mlkit.vision.common.internal.VisionCommonRegistrar"
+129-->[com.google.mlkit:vision-common:17.3.0] /home/karthi/.gradle/caches/transforms-3/b06e996754df58f6f9b943da924094f9/transformed/jetified-vision-common-17.3.0/AndroidManifest.xml:13:17-124
+130                android:value="com.google.firebase.components.ComponentRegistrar" />
+130-->[com.google.mlkit:vision-common:17.3.0] /home/karthi/.gradle/caches/transforms-3/b06e996754df58f6f9b943da924094f9/transformed/jetified-vision-common-17.3.0/AndroidManifest.xml:14:17-82
+131            <meta-data
+131-->[com.google.mlkit:common:18.9.0] /home/karthi/.gradle/caches/transforms-3/5f745a34c6c52aab1659caa5e3026e01/transformed/jetified-common-18.9.0/AndroidManifest.xml:20:13-22:85
+132                android:name="com.google.firebase.components:com.google.mlkit.common.internal.CommonComponentRegistrar"
+132-->[com.google.mlkit:common:18.9.0] /home/karthi/.gradle/caches/transforms-3/5f745a34c6c52aab1659caa5e3026e01/transformed/jetified-common-18.9.0/AndroidManifest.xml:21:17-120
+133                android:value="com.google.firebase.components.ComponentRegistrar" />
+133-->[com.google.mlkit:common:18.9.0] /home/karthi/.gradle/caches/transforms-3/5f745a34c6c52aab1659caa5e3026e01/transformed/jetified-common-18.9.0/AndroidManifest.xml:22:17-82
+134        </service>
+135
+136        <provider
+136-->[com.google.mlkit:common:18.9.0] /home/karthi/.gradle/caches/transforms-3/5f745a34c6c52aab1659caa5e3026e01/transformed/jetified-common-18.9.0/AndroidManifest.xml:9:9-13:38
+137            android:name="com.google.mlkit.common.internal.MlKitInitProvider"
+137-->[com.google.mlkit:common:18.9.0] /home/karthi/.gradle/caches/transforms-3/5f745a34c6c52aab1659caa5e3026e01/transformed/jetified-common-18.9.0/AndroidManifest.xml:10:13-78
+138            android:authorities="com.fintrackvirtualtech.mlkitinitprovider"
+138-->[com.google.mlkit:common:18.9.0] /home/karthi/.gradle/caches/transforms-3/5f745a34c6c52aab1659caa5e3026e01/transformed/jetified-common-18.9.0/AndroidManifest.xml:11:13-69
+139            android:exported="false"
+139-->[com.google.mlkit:common:18.9.0] /home/karthi/.gradle/caches/transforms-3/5f745a34c6c52aab1659caa5e3026e01/transformed/jetified-common-18.9.0/AndroidManifest.xml:12:13-37
+140            android:initOrder="99" />
+140-->[com.google.mlkit:common:18.9.0] /home/karthi/.gradle/caches/transforms-3/5f745a34c6c52aab1659caa5e3026e01/transformed/jetified-common-18.9.0/AndroidManifest.xml:13:13-35
+141
+142        <activity
+142-->[com.google.android.gms:play-services-base:18.1.0] /home/karthi/.gradle/caches/transforms-3/c59a55b27e44a3e0723d16f567fd1d1e/transformed/jetified-play-services-base-18.1.0/AndroidManifest.xml:20:9-22:45
+143            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+143-->[com.google.android.gms:play-services-base:18.1.0] /home/karthi/.gradle/caches/transforms-3/c59a55b27e44a3e0723d16f567fd1d1e/transformed/jetified-play-services-base-18.1.0/AndroidManifest.xml:20:19-85
+144            android:exported="false"
+144-->[com.google.android.gms:play-services-base:18.1.0] /home/karthi/.gradle/caches/transforms-3/c59a55b27e44a3e0723d16f567fd1d1e/transformed/jetified-play-services-base-18.1.0/AndroidManifest.xml:22:19-43
+145            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+145-->[com.google.android.gms:play-services-base:18.1.0] /home/karthi/.gradle/caches/transforms-3/c59a55b27e44a3e0723d16f567fd1d1e/transformed/jetified-play-services-base-18.1.0/AndroidManifest.xml:21:19-78
+146
+147        <meta-data
+147-->[com.google.android.gms:play-services-basement:18.1.0] /home/karthi/.gradle/caches/transforms-3/0a7cb7034eac515addf17ce8efdbda3b/transformed/jetified-play-services-basement-18.1.0/AndroidManifest.xml:21:9-23:69
+148            android:name="com.google.android.gms.version"
+148-->[com.google.android.gms:play-services-basement:18.1.0] /home/karthi/.gradle/caches/transforms-3/0a7cb7034eac515addf17ce8efdbda3b/transformed/jetified-play-services-basement-18.1.0/AndroidManifest.xml:22:13-58
+149            android:value="@integer/google_play_services_version" />
+149-->[com.google.android.gms:play-services-basement:18.1.0] /home/karthi/.gradle/caches/transforms-3/0a7cb7034eac515addf17ce8efdbda3b/transformed/jetified-play-services-basement-18.1.0/AndroidManifest.xml:23:13-66
+150
+151        <provider
+151-->[androidx.emoji2:emoji2:1.2.0] /home/karthi/.gradle/caches/transforms-3/faa3592d2fc203d6c74b9a5f601058a1/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+152            android:name="androidx.startup.InitializationProvider"
+152-->[androidx.emoji2:emoji2:1.2.0] /home/karthi/.gradle/caches/transforms-3/faa3592d2fc203d6c74b9a5f601058a1/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:25:13-67
+153            android:authorities="com.fintrackvirtualtech.androidx-startup"
+153-->[androidx.emoji2:emoji2:1.2.0] /home/karthi/.gradle/caches/transforms-3/faa3592d2fc203d6c74b9a5f601058a1/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:26:13-68
+154            android:exported="false" >
+154-->[androidx.emoji2:emoji2:1.2.0] /home/karthi/.gradle/caches/transforms-3/faa3592d2fc203d6c74b9a5f601058a1/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:27:13-37
+155            <meta-data
+155-->[androidx.emoji2:emoji2:1.2.0] /home/karthi/.gradle/caches/transforms-3/faa3592d2fc203d6c74b9a5f601058a1/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+156                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+156-->[androidx.emoji2:emoji2:1.2.0] /home/karthi/.gradle/caches/transforms-3/faa3592d2fc203d6c74b9a5f601058a1/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:30:17-75
+157                android:value="androidx.startup" />
+157-->[androidx.emoji2:emoji2:1.2.0] /home/karthi/.gradle/caches/transforms-3/faa3592d2fc203d6c74b9a5f601058a1/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:31:17-49
+158            <meta-data
+158-->[androidx.lifecycle:lifecycle-process:2.4.1] /home/karthi/.gradle/caches/transforms-3/71b91ea8216105cda74b0317da307340/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:31:13-33:52
+159                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+159-->[androidx.lifecycle:lifecycle-process:2.4.1] /home/karthi/.gradle/caches/transforms-3/71b91ea8216105cda74b0317da307340/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:32:17-78
+160                android:value="androidx.startup" />
+160-->[androidx.lifecycle:lifecycle-process:2.4.1] /home/karthi/.gradle/caches/transforms-3/71b91ea8216105cda74b0317da307340/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:33:17-49
+161        </provider>
+162
+163        <service
+163-->[com.google.android.datatransport:transport-backend-cct:2.3.3] /home/karthi/.gradle/caches/transforms-3/3c8ce7608c11d2c124765c7472926828/transformed/jetified-transport-backend-cct-2.3.3/AndroidManifest.xml:29:9-35:19
+164            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+164-->[com.google.android.datatransport:transport-backend-cct:2.3.3] /home/karthi/.gradle/caches/transforms-3/3c8ce7608c11d2c124765c7472926828/transformed/jetified-transport-backend-cct-2.3.3/AndroidManifest.xml:30:13-103
+165            android:exported="false" >
+165-->[com.google.android.datatransport:transport-backend-cct:2.3.3] /home/karthi/.gradle/caches/transforms-3/3c8ce7608c11d2c124765c7472926828/transformed/jetified-transport-backend-cct-2.3.3/AndroidManifest.xml:31:13-37
+166            <meta-data
+166-->[com.google.android.datatransport:transport-backend-cct:2.3.3] /home/karthi/.gradle/caches/transforms-3/3c8ce7608c11d2c124765c7472926828/transformed/jetified-transport-backend-cct-2.3.3/AndroidManifest.xml:32:13-34:39
+167                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+167-->[com.google.android.datatransport:transport-backend-cct:2.3.3] /home/karthi/.gradle/caches/transforms-3/3c8ce7608c11d2c124765c7472926828/transformed/jetified-transport-backend-cct-2.3.3/AndroidManifest.xml:33:17-94
+168                android:value="cct" />
+168-->[com.google.android.datatransport:transport-backend-cct:2.3.3] /home/karthi/.gradle/caches/transforms-3/3c8ce7608c11d2c124765c7472926828/transformed/jetified-transport-backend-cct-2.3.3/AndroidManifest.xml:34:17-36
+169        </service>
+170        <service
+170-->[com.google.android.datatransport:transport-runtime:2.2.6] /home/karthi/.gradle/caches/transforms-3/befcb08de6fa27f7bf4fb54dada3cb3d/transformed/jetified-transport-runtime-2.2.6/AndroidManifest.xml:26:9-30:19
+171            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+171-->[com.google.android.datatransport:transport-runtime:2.2.6] /home/karthi/.gradle/caches/transforms-3/befcb08de6fa27f7bf4fb54dada3cb3d/transformed/jetified-transport-runtime-2.2.6/AndroidManifest.xml:27:13-117
+172            android:exported="false"
+172-->[com.google.android.datatransport:transport-runtime:2.2.6] /home/karthi/.gradle/caches/transforms-3/befcb08de6fa27f7bf4fb54dada3cb3d/transformed/jetified-transport-runtime-2.2.6/AndroidManifest.xml:28:13-37
+173            android:permission="android.permission.BIND_JOB_SERVICE" >
+173-->[com.google.android.datatransport:transport-runtime:2.2.6] /home/karthi/.gradle/caches/transforms-3/befcb08de6fa27f7bf4fb54dada3cb3d/transformed/jetified-transport-runtime-2.2.6/AndroidManifest.xml:29:13-69
+174        </service>
+175
+176        <receiver
+176-->[com.google.android.datatransport:transport-runtime:2.2.6] /home/karthi/.gradle/caches/transforms-3/befcb08de6fa27f7bf4fb54dada3cb3d/transformed/jetified-transport-runtime-2.2.6/AndroidManifest.xml:32:9-34:40
+177            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+177-->[com.google.android.datatransport:transport-runtime:2.2.6] /home/karthi/.gradle/caches/transforms-3/befcb08de6fa27f7bf4fb54dada3cb3d/transformed/jetified-transport-runtime-2.2.6/AndroidManifest.xml:33:13-132
+178            android:exported="false" />
+178-->[com.google.android.datatransport:transport-runtime:2.2.6] /home/karthi/.gradle/caches/transforms-3/befcb08de6fa27f7bf4fb54dada3cb3d/transformed/jetified-transport-runtime-2.2.6/AndroidManifest.xml:34:13-37
+179
+180        <meta-data
+180-->[com.facebook.soloader:soloader:0.10.5] /home/karthi/.gradle/caches/transforms-3/03d018e18e7118763cc731de8f689ba0/transformed/jetified-soloader-0.10.5/AndroidManifest.xml:12:9-14:37
+181            android:name="com.facebook.soloader.enabled"
+181-->[com.facebook.soloader:soloader:0.10.5] /home/karthi/.gradle/caches/transforms-3/03d018e18e7118763cc731de8f689ba0/transformed/jetified-soloader-0.10.5/AndroidManifest.xml:13:13-57
+182            android:value="false" />
+182-->[com.facebook.soloader:soloader:0.10.5] /home/karthi/.gradle/caches/transforms-3/03d018e18e7118763cc731de8f689ba0/transformed/jetified-soloader-0.10.5/AndroidManifest.xml:14:13-34
+183    </application>
+184
+185</manifest>
